@@ -1,0 +1,9 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "gg-lambda-bl-gw"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1ggtndjgbqlym"
+s3_prefix = "gg-lambda-bl-gw"
+region = "ap-northeast-1"
+capabilities = "CAPABILITY_IAM"

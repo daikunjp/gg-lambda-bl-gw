@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Nabtesco AD-LINK2 Lambda Program
+  KinesistoMySQL : from Kinesis To MySQL
+  IoTtoSNS : from IoT To SNS
+  DeviceMon : Device Monitor Program
+
+Globals:
+  Function:
+    Timeout: 90
+    Environment:
+Resources:
+  GGlambdaBLgw: 
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: gg-lambda-bl-gw/
+      Handler: gg-lambda-bl-gw.lambda_handler 
+      Runtime: python3.7

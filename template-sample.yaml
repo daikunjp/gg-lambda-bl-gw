@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description:
+ Device Lambda
+Parameters:
+  Group Name: 
+    Default: my-group
+    Type: String
+  FunctionAlias: 
+    Default: prod
+    Type: String
+
+Resources: 
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSGreengrassResourceAccessRolePolicy
+        - arn:aws:iam::aws:policy/AWSGreengrassFullAccess
+      AssumeRolePolicyDocument:
+         Statement:
+          - Effect: Allow
+         Principal:
+         Service:
+          - lambda.amazonaws.com
+         Action: sts:AssumeRole
+  DeviceCoreFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: device/
+      Handler: device.function_handler
+      Runtime: python2.7
+      Role: !GetAtt LambdaRole.Arn
+      AutoPublishAlias: !Ref FunctionAlias
+  CustomFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: custom/
+      Handler: custom.function_handler
+      Runtime: python2.7
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          GROUP_NAME: !Ref GroupName
+  CustomResource:
+    Type: Custom::CustomResource
+    DependsOn: DeviceCoreFunction
+    Properties:
+      ServiceToken: !GetAtt 'CustomFunction.Arn'
+      ParameterOne: Parameter to pass into Custom Lambda Function
