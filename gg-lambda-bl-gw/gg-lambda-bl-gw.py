@@ -37,8 +37,7 @@ my_platform = platform.platform()
 # this function never returns a result.
 
 
-#def greengrass_hello_world_run():
-def lambda_function():
+def greengrass_hello_world_run():
     try:
         if not my_platform:
             client.publish(
