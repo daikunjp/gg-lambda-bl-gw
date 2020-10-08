@@ -17,3 +17,4 @@ Resources:
       CodeUri: gg-lambda-bl-gw/
       Handler: gg-lambda-bl-gw.lambda_handler 
       Runtime: python3.7
+      AutoPublishAlias: GGlambdaBLgw
